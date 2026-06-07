@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUESS THE ANIME VILLAIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-dark: #0b0b12;
+    --panel-bg: #161625;
+    --neon-blue: #00f3ff;
+    --neon-pink: #ff00ea;
+    --neon-green: #39ff14;
+    --neon-red: #ff073a;
+    --text-main: #ffffff;
+    --boys-color: #00f3ff;
+    --girls-color: #ff00ea;
+  }
+
+  * { 
+    box-sizing: border-box; 
+    font-family: 'Roboto', sans-serif;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.05), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(255, 0, 234, 0.05), transparent 25%);
+  }
+
+  /* Particles Background */
+  #particles {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
+  .header-banner {
+    background-color: rgba(11, 11, 18, 0.9);
+    border-bottom: 2px solid var(--neon-pink);
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 0, 234, 0.3);
+    z-index: 10;
+  }
+
+  .header-banner h1 {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-pink);
+  }
+
+  /* Scoreboard Layout */
+  .scoreboard-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    z-index: 10;
+    flex-wrap: wrap;
+  }
+
+  .team-card {
+    background: var(--panel-bg);
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 15px 20px;
+    text-align: center;
+    width: 280px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0.6;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-card h2 {
+    font-family: 'Orbitron', sans-serif;
+    margin: 0 0 10px 0;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+  }
+
+  .team-card .score {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  /* Progress Bar */
+  .progress-bg {
+    background: #222;
+    height: 10px;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 15px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 0.5s ease-out;
+  }
+
+  /* Active Turn Highlighting */
+  .team-card.active-turn {
+    opacity: 1;
+    transform: scale(1.08) translateY(-5px);
+  }
+  #team-boys.active-turn {
+    border-color: var(--boys-color);
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.4), inset 0 0 10px rgba(0, 243, 255, 0.2);
+  }
+  #team-girls.active-turn {
+    border-color: var(--girls-color);
+    box-shadow: 0 0 25px rgba(255, 0, 234, 0.4), inset 0 0 10px rgba(255, 0, 234, 0.2);
+  }
+
+  #team-boys h2, #score-boys { color: var(--boys-color); text-shadow: 0 0 8px var(--boys-color); }
+  #team-girls h2, #score-girls { color: var(--girls-color); text-shadow: 0 0 8px var(--girls-color); }
+  #team-boys .progress-fill { background: var(--boys-color); box-shadow: 0 0 10px var(--boys-color); }
+  #team-girls .progress-fill { background: var(--girls-color); box-shadow: 0 0 10px var(--girls-color); }
+
+  /* Main Game Area */
+  .game-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 20px 40px;
+    z-index: 10;
+  }
+
+  .turn-announcer {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    padding: 10px 40px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #000;
+    box-shadow: 0 0 15px currentColor;
+    transition: all 0.3s ease;
+  }
+
+  /* Villain Image Frame */
+  .image-frame {
+    background-color: #000;
+    border: 4px solid #444;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    transition: border-color 0.3s;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .active-boys-frame { border-color: var(--boys-color) !important; box-shadow: 0 0 20px rgba(0, 243, 255, 0.3) !important; }
+  .active-girls-frame { border-color: var(--girls-color) !important; box-shadow: 0 0 20px rgba(255, 0, 234, 0.3) !important; }
+
+  .image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    border-radius: 4px;
+  }
+
+  .villain-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+  }
+
+  /* Action Buttons Grid */
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Changed to 3 columns for 6 buttons */
+    gap: 15px;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .action-btn {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 20px 15px;
+    background: rgba(22, 22, 37, 0.8);
+    border: 2px solid #444;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: white;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: 0.5s;
+  }
+
+  .action-btn:hover:not(:disabled) {
+    border-color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+  }
+  
+  .action-btn:hover:not(:disabled)::before {
+    left: 100%;
+  }
+
+  .action-btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  .btn-correct { background-color: rgba(57, 255, 20, 0.2) !important; border-color: var(--neon-green) !important; box-shadow: 0 0 15px var(--neon-green) !important; color: var(--neon-green) !important; }
+  .btn-wrong { background-color: rgba(255, 7, 58, 0.2) !important; border-color: var(--neon-red) !important; box-shadow: 0 0 15px var(--neon-red) !important; color: var(--neon-red) !important; }
+
+  /* Feedback Overlay */
+  #feedback-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    background: rgba(0,0,0,0.85);
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  #feedback-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  #feedback-desc {
+    font-size: 1.5rem;
+    color: #fff;
+    animation: fadeIn 0.5s ease forwards 0.3s;
+    opacity: 0;
+  }
+
+  .text-correct { color: var(--neon-green); text-shadow: 0 0 20px var(--neon-green); }
+  .text-wrong { color: var(--neon-red); text-shadow: 0 0 20px var(--neon-red); }
+
+  /* Animations */
+  @keyframes flashCorrect { 0%, 100% { background-color: var(--bg-dark); } 50% { background-color: rgba(57, 255, 20, 0.2); } }
+  @keyframes flashWrong { 0%, 100% { background-color: var(--bg-dark); } 50% { background-color: rgba(255, 7, 58, 0.2); } }
+  .flash-correct { animation: flashCorrect 0.6s ease; }
+  .flash-wrong { animation: flashWrong 0.6s ease; }
+
+  @keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* Confetti Canvas */
+  #confetti-canvas {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .controls { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .team-card { width: 100%; max-width: 300px; }
+    .header-banner h1 { font-size: 1.8rem; }
+    .villain-name { font-size: 1.8rem; }
+  }
+  @media (max-width: 480px) {
+    .controls { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+<canvas id="confetti-canvas"></canvas>
+
+<div class="header-banner">
+  <h1>GUESS THE ANIME VILLAIN</h1>
+</div>
+
+<div class="scoreboard-container">
+  <div class="team-card" id="team-boys">
+    <h2>Boys</h2>
+    <p class="score" id="score-boys">0</p>
+    <div class="progress-bg"><div class="progress-fill" id="progress-boys"></div></div>
+  </div>
+  <div class="team-card" id="team-girls">
+    <h2>Girls</h2>
+    <p class="score" id="score-girls">0</p>
+    <div class="progress-bg"><div class="progress-fill" id="progress-girls"></div></div>
+  </div>
+</div>
+
+<div class="game-container" id="game-area">
+  <div class="turn-announcer" id="turn-announcer">
+    BOYS' TURN!
+  </div>
+
+  <div class="image-frame" id="image-border">
+    <img id="villain-img" src="" alt="Villain Image" onerror="this.src='https://placehold.co/600x400/161625/ffffff?text=Image+Missing'">
+  </div>
+  
+  <div class="villain-name" id="villain-name">Loading...</div>
+
+  <div class="controls" id="controls">
+    </div>
+</div>
+
+<div id="feedback-overlay">
+  <div id="feedback-title">CORRECT!</div>
+  <div id="feedback-desc">Madara Uchiha is from Naruto!</div>
+</div>
+
+<script>
+// --- Database from JSON Mapping ---
+const VILLAIN_DATA = [
+  { "villain": "Frieza", "anime": "Dragon Ball Z", "image": "https://static.wikia.nocookie.net/dragonball/images/e/ee/DBS_Broly_Frieza_Render.png/revision/latest?cb=20221019232854" },
+  { "villain": "Madara Uchiha", "anime": "Naruto", "image": "https://cmsapi-frontend.naruto-official.com/site/api/naruto/Image/get?path=/naruto/import/images/naruto02/501%EF%BD%9E600/542/C004.jpg" },
+  { "villain": "Sosuke Aizen", "anime": "Bleach", "image": "https://upload.wikimedia.org/wikipedia/en/8/85/AizenAnimeEp60.jpg" },
+  { "villain": "Dio Brando", "anime": "JoJo's Bizarre Adventure", "image": "https://upload.wikimedia.org/wikipedia/en/d/d2/Dio_Brando.jpg" },
+  { "villain": "Shigaraki", "anime": "My Hero Academia", "image": "https://static.wikia.nocookie.net/bokunoheroacademia/images/4/45/Tomura_Shigaraki_Anime_Action.png/revision/latest/scale-to-width-down/212?cb=20210710091348" },
+  { "villain": "Muzan Kibutsuji", "anime": "Demon Slayer", "image": "https://static.wikia.nocookie.net/characterprofile/images/f/fb/Anime_DemonSlayer_Muzan_3.jpg/revision/latest/scale-to-width-down/1200?cb=20230628135506" },
+  { "villain": "Meruem", "anime": "Hunter x Hunter", "image": "https://miro.medium.com/1*4zPvBqTSdeXszAfLH4lwzQ.png" },
+  { "villain": "Light Yagami", "anime": "Death Note", "image": "https://static.wikia.nocookie.net/near_pure_evil/images/2/24/Light_Yagami.jpg/revision/latest?cb=20241230145442" },
+  { "villain": "Father", "anime": "Fullmetal Alchemist Brotherhood", "image": "https://static.wikia.nocookie.net/fma/images/8/82/Fullmetal_Alchemist_-_44_-_Large_29.jpg/revision/latest?cb=20110826195601" },
+  { "villain": "All For One", "anime": "My Hero Academia", "image": "https://static.wikia.nocookie.net/villains/images/b/bb/AllForOneSmashTap.png/revision/latest?cb=20180620172320" },
+  { "villain": "Orochimaru", "anime": "Naruto", "image": "https://upload.wikimedia.org/wikipedia/en/3/33/Orochimaru%2C_Screenshot_%28manga%29.jpg" },
+  { "villain": "Blackbeard", "anime": "One Piece", "image": "https://static.wikia.nocookie.net/onepiece/images/f/ff/Marshall_D._Teach_Anime_Post_Timeskip_Infobox.png/revision/latest/scale-to-width/360?cb=20240128044952" },
+  { "villain": "Akaza", "anime": "Demon Slayer", "image": "https://static.wikia.nocookie.net/villains/images/7/70/Akaza_Full_Body_Design_%25_28Anime%25_29.png/revision/latest?cb=20260106113708" },
+  { "villain": "Ryomen Sukuna", "anime": "Jujutsu Kaisen", "image": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/7/74/Sukuna_%28Volume_29%29.png/revision/latest?cb=20250726003512" },
+  { "villain": "Kenjaku", "anime": "Jujutsu Kaisen", "image": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/2b/Kenjaku_%28Anime%29.png/revision/latest?cb=20250726010244" },
+  { "villain": "Hisoka", "anime": "Hunter x Hunter", "image": "https://static.wikia.nocookie.net/characterprofile/images/1/1c/Hisoka.png/revision/latest?cb=20220918185653" },
+  { "villain": "Donquixote Doflamingo", "anime": "One Piece", "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Collage-Maker-24-Aug-2022-0757-AM.jpg?w=1600&h=900&fit=crop" },
+  { "villain": "Cell", "anime": "Dragon Ball Z", "image": "https://static.wikia.nocookie.net/dragonball/images/e/ed/Cell_Dragon_Ball_Z_Episode_177.png/revision/latest/scale-to-width-down/1200?cb=20241206024341" },
+  { "villain": "Pain", "anime": "Naruto", "image": "https://media.thepopverse.com/media/pain-featured-image-in-naruto-4t3bpb2ppopedieq2mbdzm1e5u.jpg" },
+  { "villain": "Kaguya Otsutsuki", "anime": "Naruto", "image": "https://static.wikia.nocookie.net/naruto/images/6/6c/Kaguya_%C5%8Ctsutsuki.png/revision/latest?cb=20180824113908" },
+  { "villain": "Envy", "anime": "Fullmetal Alchemist Brotherhood", "image": "https://static.wikia.nocookie.net/monster/images/0/03/Envy_The_Alchemist_Code_Render.webp/revision/latest?cb=20220115093444" },
+  { "villain": "Shishigami", "anime": "Inuyashiki", "image": "https://static.wikia.nocookie.net/villains/images/b/bb/Hiro_Shishigami.jpg/revision/latest?cb=20171030050745" },
+  { "villain": "Zamasu", "anime": "Dragon Ball Super", "image": "https://static.wikia.nocookie.net/dragonball/images/5/59/Zamasu_DBS_Ep_53_006.png/revision/latest/scale-to-width-down/1200?cb=20180820041712" },
+  { "villain": "Dazai Osamu", "anime": "Bungou Stray Dogs", "image": "https://static0.cbrimages.com/wordpress/wp-content/uploads/2023/01/bungou-stray-dogs-15-facts-you-didn-t-know-about-osamu-dazai-1.jpg" },
+  { "villain": "Shogo Makishima", "anime": "Psycho-Pass", "image": "https://static.wikia.nocookie.net/psychopass/images/5/5a/Makishima_1.png/revision/latest?cb=20200914194725" },
+  { "villain": "Gendo Ikari", "anime": "Neon Genesis Evangelion", "image": "https://assets-prd.ignimgs.com/2021/08/13/gendo-pose-1628897003950.jpg" },
+  { "villain": "Satsuki Kiryuin", "anime": "Kill la Kill", "image": "https://static.wikia.nocookie.net/kill-la-kill/images/f/f0/Op_satsuki.jpg/revision/latest?cb=20230315222019" },
+  { "villain": "Esdeath", "anime": "Akame ga Kill!", "image": "https://preview.redd.it/so-what-are-your-honest-thoughts-on-esdeath-v0-it3pmkf8345d1.jpeg?auto=webp&s=4ec7c952ba50150f7736150167ad59ada4ab61bf" },
+  { "villain": "Kira Yoshikage", "anime": "JoJo's Bizarre Adventure", "image": "https://static.jojowiki.com/images/thumb/c/ce/latest/20210107171552/Yoshikage_Kira_Original_Infobox_Manga.png/400px-Yoshikage_Kira_Original_Infobox_Manga.png" },
+  { "villain": "Shou Tucker", "anime": "Fullmetal Alchemist Brotherhood", "image": "https://static.wikitide.net/loathsomecharacterswiki/c/cc/Tucker.png" },
+  { "villain": "Skeletor", "anime": "Masters of the Universe", "image": "https://static0.moviewebimages.com/wordpress/wp-content/uploads/2026/04/skeletor-in-masters-of-the-universe.jpg?w=1600&h=900&fit=crop" },
+  { "villain": "Vicious", "anime": "Cowboy Bebop", "image": "https://static.wikia.nocookie.net/cowboybebop/images/5/55/Vicious.png/revision/latest?cb=20111031201459" }
+];
+
+// Extract unique animes for wrong answers
+const ALL_ANIMES = [...new Set(VILLAIN_DATA.map(v => v.anime))];
+
+// --- Game State ---
+let currentTurn = 'boys'; 
+let scores = { boys: 0, girls: 0 };
+let currentVillainIndex = 0;
+let shuffledVillains = [];
+const WIN_SCORE = 100;
+
+// --- DOM Elements ---
+const elBoysCard = document.getElementById('team-boys');
+const elGirlsCard = document.getElementById('team-girls');
+const elTurnAnnouncer = document.getElementById('turn-announcer');
+const elVillainImg = document.getElementById('villain-img');
+const elVillainName = document.getElementById('villain-name');
+const elControls = document.getElementById('controls');
+const elImageBorder = document.getElementById('image-border');
+const feedbackOverlay = document.getElementById('feedback-overlay');
+const feedbackTitle = document.getElementById('feedback-title');
+const feedbackDesc = document.getElementById('feedback-desc');
+
+// --- Audio System ---
+function playSound(type){
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = ctx.createOscillator();
+  const gainNode = ctx.createGain();
+  
+  osc.connect(gainNode);
+  gainNode.connect(ctx.destination);
+  
+  if(type === "correct"){
+    osc.type = "square"; // More 8-bit/retro anime feel
+    osc.frequency.setValueAtTime(440, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
+    osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.2);
+    gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.4);
+  } else if (type === "wrong") {
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(150, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.4);
+    gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.4);
+  } else if (type === "win") {
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
+    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.2); // G5
+    osc.frequency.setValueAtTime(1046.50, ctx.currentTime + 0.3); // C6
+    gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 1.5);
+    osc.start();
+    osc.stop(ctx.currentTime + 1.5);
+  }
+}
+
+// --- Utilities ---
+function shuffle(array){
+  return array.sort(()=>Math.random()-0.5);
+}
+
+function getRandomWrongAnimes(correctAnime, count = 5) { // Updated to generate 5 wrong options
+  let wrongAnimes = ALL_ANIMES.filter(a => a !== correctAnime);
+  wrongAnimes = shuffle(wrongAnimes);
+  return wrongAnimes.slice(0, count);
+}
+
+// --- Game Logic ---
+function initGame() {
+  shuffledVillains = shuffle([...VILLAIN_DATA]);
+  currentVillainIndex = 0;
+  updateTurnUI();
+  loadQuestion();
+  initParticles();
+}
+
+function loadQuestion() {
+  if (currentVillainIndex >= shuffledVillains.length) {
+    shuffledVillains = shuffle([...VILLAIN_DATA]);
+    currentVillainIndex = 0;
+  }
+  
+  const villain = shuffledVillains[currentVillainIndex];
+  elVillainImg.src = villain.image;
+  elVillainName.textContent = villain.villain;
+  
+  // Generate Answers (1 correct + 5 wrong = 6 total options)
+  const correctAnime = villain.anime;
+  const wrongAnimes = getRandomWrongAnimes(correctAnime, 5); 
+  let options = shuffle([correctAnime, ...wrongAnimes]);
+
+  elControls.innerHTML = '';
+  options.forEach(option => {
+    const btn = document.createElement('button');
+    btn.className = 'action-btn';
+    btn.textContent = option;
+    btn.onclick = () => makeGuess(option, btn);
+    elControls.appendChild(btn);
+  });
+}
+
+function updateTurnUI() {
+  elImageBorder.className = 'image-frame';
+  if (currentTurn === 'boys') {
+    elBoysCard.classList.add('active-turn');
+    elGirlsCard.classList.remove('active-turn');
+    elTurnAnnouncer.textContent = "BOYS' TURN!";
+    elTurnAnnouncer.style.backgroundColor = "var(--boys-color)";
+    elTurnAnnouncer.style.color = "#000";
+    elImageBorder.classList.add('active-boys-frame');
+  } else {
+    elGirlsCard.classList.add('active-turn');
+    elBoysCard.classList.remove('active-turn');
+    elTurnAnnouncer.textContent = "GIRLS' TURN!";
+    elTurnAnnouncer.style.backgroundColor = "var(--girls-color)";
+    elTurnAnnouncer.style.color = "#fff";
+    elImageBorder.classList.add('active-girls-frame');
+  }
+}
+
+function showFeedback(isCorrect, villainName, correctAnime) {
+  feedbackOverlay.style.display = 'flex';
+  feedbackTitle.className = '';
+  
+  if (isCorrect) {
+    feedbackTitle.textContent = "CORRECT!";
+    feedbackTitle.classList.add('text-correct');
+    feedbackDesc.innerHTML = `<span style="color:var(--neon-blue);font-weight:bold;">${villainName}</span> is from <span style="color:var(--neon-green);font-weight:bold;">${correctAnime}</span>!`;
+  } else {
+    feedbackTitle.textContent = "Igual de mongol que Louis!";
+    feedbackTitle.classList.add('text-wrong');
+    feedbackDesc.innerHTML = `<span style="color:var(--neon-blue);font-weight:bold;">${villainName}</span> is actually from <span style="color:var(--neon-red);font-weight:bold;">${correctAnime}</span>.`;
+  }
+
+  // Force reflow for animation restart
+  feedbackTitle.style.animation = 'none';
+  feedbackTitle.offsetHeight; 
+  feedbackTitle.style.animation = null;
+
+  feedbackDesc.style.animation = 'none';
+  feedbackDesc.offsetHeight;
+  feedbackDesc.style.animation = null;
+}
+
+function makeGuess(guess, btnElement) {
+  const buttons = document.querySelectorAll('.action-btn');
+  buttons.forEach(btn => btn.disabled = true);
+
+  const villain = shuffledVillains[currentVillainIndex];
+  const isCorrect = (guess === villain.anime);
+
+  document.body.classList.remove('flash-correct', 'flash-wrong');
+  void document.body.offsetWidth; 
+
+  if (isCorrect) {
+    playSound('correct');
+    document.body.classList.add('flash-correct');
+    btnElement.classList.add('btn-correct');
+    scores[currentTurn] += 10;
+    
+    // Update Score & Progress
+    document.getElementById(`score-${currentTurn}`).textContent = scores[currentTurn];
+    const progressPercent = Math.min((scores[currentTurn] / WIN_SCORE) * 100, 100);
+    document.getElementById(`progress-${currentTurn}`).style.width = `${progressPercent}%`;
+
+    showFeedback(true, villain.villain, villain.anime);
+
+    if (scores[currentTurn] >= WIN_SCORE) {
+      setTimeout(() => endGame(currentTurn), 1500); 
+      return; 
+    }
+
+  } else {
+    playSound('wrong');
+    document.body.classList.add('flash-wrong');
+    btnElement.classList.add('btn-wrong');
+    
+    // Find and highlight correct button
+    buttons.forEach(btn => {
+      if(btn.textContent === villain.anime) btn.classList.add('btn-correct');
+    });
+
+    showFeedback(false, villain.villain, villain.anime);
+  }
+
+  // Next Turn Logic
+  setTimeout(() => {
+    feedbackOverlay.style.display = 'none';
+    currentTurn = (currentTurn === 'boys') ? 'girls' : 'boys';
+    currentVillainIndex++;
+    updateTurnUI();
+    loadQuestion();
+  }, 2500); 
+}
+
+function endGame(winningTeam) {
+  playSound('win');
+  startConfetti();
+  feedbackOverlay.style.display = 'none';
+  
+  const gameArea = document.getElementById('game-area');
+  const teamName = winningTeam === 'boys' ? 'BOYS' : 'GIRLS';
+  const teamColor = winningTeam === 'boys' ? 'var(--boys-color)' : 'var(--girls-color)';
+
+  gameArea.innerHTML = `
+    <div style="text-align: center; animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+      <div style="font-size: 6rem; margin-bottom: 10px; text-shadow: 0 0 20px #fff;">🏆</div>
+      <h1 style="font-family: 'Orbitron', sans-serif; font-size: 4rem; color: ${teamColor}; margin: 0; text-shadow: 0 0 20px ${teamColor};">${teamName} WIN!</h1>
+      <p style="font-size: 1.5rem; color: #ccc; margin-top:10px;">ULTIMATE ANIME EXPERTS!</p>
+      <button class="action-btn" onclick="location.reload()" style="margin-top: 30px; padding: 20px 40px; font-size: 1.5rem; background: ${teamColor}; color: #000; font-weight: 900;">PLAY AGAIN</button>
+    </div>
+  `;
+}
+
+// --- Background Particles ---
+function initParticles() {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particlesArray = [];
+  const colors = ['#00f3ff', '#ff00ea', '#ffffff'];
+
+  for (let i = 0; i < 50; i++) {
+    particlesArray.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 2 + 1,
+      speedY: Math.random() * 1 - 0.5,
+      speedX: Math.random() * 1 - 0.5,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particlesArray.length; i++) {
+      let p = particlesArray[i];
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      
+      p.x += p.speedX;
+      p.y += p.speedY;
+
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+// --- Confetti System ---
+function startConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const confettiCount = 200;
+  const confetti = [];
+  const colors = ['#00f3ff', '#ff00ea', '#39ff14', '#ff073a', '#ffffff', '#ffd700'];
+
+  for (let i = 0; i < confettiCount; i++) {
+    confetti.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 10 + 5,
+      h: Math.random() * 10 + 5,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      speedY: Math.random() * 3 + 2,
+      speedX: Math.random() * 2 - 1,
+      rot: Math.random() * 360,
+      rotSpeed: Math.random() * 10 - 5
+    });
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let active = false;
+
+    confetti.forEach(c => {
+      if (c.y < canvas.height) {
+        active = true;
+        c.y += c.speedY;
+        c.x += c.speedX;
+        c.rot += c.rotSpeed;
+
+        ctx.save();
+        ctx.translate(c.x, c.y);
+        ctx.rotate((c.rot * Math.PI) / 180);
+        ctx.fillStyle = c.color;
+        ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+        ctx.restore();
+      }
+    });
+
+    if (active) requestAnimationFrame(render);
+  }
+  render();
+}
+
+window.addEventListener('resize', () => {
+  document.getElementById('particles').width = window.innerWidth;
+  document.getElementById('particles').height = window.innerHeight;
+  document.getElementById('confetti-canvas').width = window.innerWidth;
+  document.getElementById('confetti-canvas').height = window.innerHeight;
+});
+
+// Start Game
+initGame();
+
+</script>
+</body>
+</html>
