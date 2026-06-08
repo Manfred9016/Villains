@@ -167,15 +167,15 @@
   .image-frame {
     background-color: #000;
     border: 4px solid #444;
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 5px;
     margin-bottom: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.8);
     position: relative;
-    max-width: 500px;
+    max-width: 400px;
     width: 100%;
+    height: 480px; 
     transition: border-color 0.3s;
-    aspect-ratio: 16/9;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,10 +188,10 @@
   .image-frame img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: top;
+    object-fit: cover; 
+    object-position: top; 
     display: block;
-    border-radius: 4px;
+    border-radius: 8px;
   }
 
   .villain-name {
@@ -207,7 +207,7 @@
   /* Action Buttons Grid */
   .controls {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Changed to 3 columns for 6 buttons */
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     max-width: 900px;
     width: 100%;
@@ -315,6 +315,41 @@
     z-index: 999;
   }
 
+  /* =========================================
+     GALLERY TESTER STYLES 
+     ========================================= */
+  #gallery-mode {
+    display: none;
+    padding: 20px;
+    z-index: 10;
+    position: relative;
+  }
+  .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+  }
+  .villain-card {
+      text-align: center;
+      background-color: var(--panel-bg);
+      padding: 10px;
+      border-radius: 12px;
+      border: 2px solid #333;
+  }
+  .villain-pic {
+      width: 250px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid var(--neon-pink);
+  }
+  .villain-card p {
+      margin: 10px 0 0 0;
+      font-weight: bold;
+      font-family: 'Orbitron', sans-serif;
+  }
+
   /* Responsive */
   @media (max-width: 900px) {
     .controls { grid-template-columns: repeat(2, 1fr); }
@@ -323,6 +358,7 @@
     .team-card { width: 100%; max-width: 300px; }
     .header-banner h1 { font-size: 1.8rem; }
     .villain-name { font-size: 1.8rem; }
+    .image-frame { max-width: 320px; height: 384px; } 
   }
   @media (max-width: 480px) {
     .controls { grid-template-columns: 1fr; }
@@ -339,32 +375,79 @@
   <h1>GUESS THE ANIME VILLAIN</h1>
 </div>
 
-<div class="scoreboard-container">
-  <div class="team-card" id="team-boys">
-    <h2>Boys</h2>
-    <p class="score" id="score-boys">0</p>
-    <div class="progress-bg"><div class="progress-fill" id="progress-boys"></div></div>
+<div style="text-align: center; z-index: 10; position: relative; margin-top: 15px;">
+  <button class="action-btn" style="padding: 10px 20px; font-size: 0.9rem;" onclick="toggleGallery()">Toggle Image Tester Gallery</button>
+</div>
+
+<div id="game-mode">
+  <div class="scoreboard-container">
+    <div class="team-card" id="team-boys">
+      <h2>Boys</h2>
+      <p class="score" id="score-boys">0</p>
+      <div class="progress-bg"><div class="progress-fill" id="progress-boys"></div></div>
+    </div>
+    <div class="team-card" id="team-girls">
+      <h2>Girls</h2>
+      <p class="score" id="score-girls">0</p>
+      <div class="progress-bg"><div class="progress-fill" id="progress-girls"></div></div>
+    </div>
   </div>
-  <div class="team-card" id="team-girls">
-    <h2>Girls</h2>
-    <p class="score" id="score-girls">0</p>
-    <div class="progress-bg"><div class="progress-fill" id="progress-girls"></div></div>
+
+  <div class="game-container" id="game-area">
+    <div class="turn-announcer" id="turn-announcer">
+      BOYS' TURN!
+    </div>
+
+    <div class="image-frame" id="image-border">
+      <img id="villain-img" src="" alt="Villain Image" onerror="this.src='https://placehold.co/400x480/161625/ffffff?text=Image+Missing'">
+    </div>
+    
+    <div class="villain-name" id="villain-name">Loading...</div>
+
+    <div class="controls" id="controls">
+      </div>
   </div>
 </div>
 
-<div class="game-container" id="game-area">
-  <div class="turn-announcer" id="turn-announcer">
-    BOYS' TURN!
-  </div>
+<div id="gallery-mode">
+  <h1 style="text-align: center; font-family: 'Orbitron', sans-serif; color: var(--neon-blue);">Image Path Tester</h1>
+  <p style="text-align: center; margin-bottom: 30px;">If an image is broken here, double-check its exact spelling and file extension (.jpg, .png, .webp) in your GitHub 'Images' folder.</p>
 
-  <div class="image-frame" id="image-border">
-    <img id="villain-img" src="" alt="Villain Image" onerror="this.src='https://placehold.co/600x400/161625/ffffff?text=Image+Missing'">
+  <div class="gallery">
+      <div class="villain-card"><img src="Images\Frieza.png" alt="Frieza" class="villain-pic"><p>Frieza</p></div>
+      <div class="villain-card"><img src="Images/Madara Uchiha.jpg" alt="Madara Uchiha" class="villain-pic"><p>Madara Uchiha</p></div>
+      <div class="villain-card"><img src="Images\Sosuke Aizen.png" alt="Sosuke Aizen" class="villain-pic"><p>Sosuke Aizen</p></div>
+      <div class="villain-card"><img src="Images\Dio Brando.png" alt="Dio Brando" class="villain-pic"><p>Dio Brando</p></div>
+      <div class="villain-card"><img src="Images\Shigaraki.png" alt="Shigaraki" class="villain-pic"><p>Shigaraki</p></div>
+      <div class="villain-card"><img src="Images\Muzan Kibutsuji.png" alt="Muzan Kibutsuji" class="villain-pic"><p>Muzan Kibutsuji</p></div>
+      <div class="villain-card"><img src="Images\Meruem.png" alt="Meruem" class="villain-pic"><p>Meruem</p></div>
+      <div class="villain-card"><img src="Images\Light_Yagami.png" alt="Light Yagami" class="villain-pic"><p>Light Yagami</p></div>
+      <div class="villain-card"><img src="Images\Father.png" alt="Father" class="villain-pic"><p>Father</p></div>
+      <div class="villain-card"><img src="Images\All For One.png" alt="All For One" class="villain-pic"><p>All For One</p></div>
+      <div class="villain-card"><img src="Images\Orochimaru.png" alt="Orochimaru" class="villain-pic"><p>Orochimaru</p></div>
+      <div class="villain-card"><img src="Images\Blackbeard.png" alt="Blackbeard" class="villain-pic"><p>Blackbeard</p></div>
+      <div class="villain-card"><img src="Images\Akaza.png" alt="Akaza" class="villain-pic"><p>Akaza</p></div>
+      <div class="villain-card"><img src="Images\Sukuna_Cursed_Clash.png" alt="Ryomen Sukuna" class="villain-pic"><p>Ryomen Sukuna</p></div>
+      <div class="villain-card"><img src="Images\Kenjaku.png" alt="Kenjaku" class="villain-pic"><p>Kenjaku</p></div>
+      <div class="villain-card"><img src="Images\Hisoka.png" alt="Hisoka" class="villain-pic"><p>Hisoka</p></div>
+      <div class="villain-card"><img src="Images\DoflamingoRender.png" alt="Donquixote Doflamingo" class="villain-pic"><p>Donquixote Doflamingo</p></div>
+      <div class="villain-card"><img src="Images\Cell.png" alt="Cell" class="villain-pic"><p>Cell</p></div>
+      <div class="villain-card"><img src="Images\Pain.png" alt="Pain" class="villain-pic"><p>Pain</p></div>
+      <div class="villain-card"><img src="Images\Kaguya Otsutsuki.png" alt="Kaguya Otsutsuki" class="villain-pic"><p>Kaguya Otsutsuki</p></div>
+      <div class="villain-card"><img src="Images\Zamasu.pngsu.jpg" alt="Zamasu" class="villain-pic"><p>Zamasu</p></div>
+      <div class="villain-card"><img src="Images\Dazai Osamu.png" alt="Dazai Osamu" class="villain-pic"><p>Dazai Osamu</p></div>
+      <div class="villain-card"><img src="Images\Gendo Ikari.png" alt="Gendo Ikari" class="villain-pic"><p>Gendo Ikari</p></div>
+      <div class="villain-card"><img src="Images\Satsuki Kiryuin.png" alt="Satsuki Kiryuin" class="villain-pic"><p>Satsuki Kiryuin</p></div>
+      <div class="villain-card"><img src="Images\Esdeath.png" alt="Esdeath" class="villain-pic"><p>Esdeath</p></div>
+      <div class="villain-card"><img src="Images\Kira Yoshikage.png" alt="Kira Yoshikage" class="villain-pic"><p>Kira Yoshikage</p></div>
+      <div class="villain-card"><img src="Images\Skeletor.png" alt="Skeletor" class="villain-pic"><p>Skeletor</p></div>
+      <div class="villain-card"><img src="Images\Skeletor.jpg" alt="Skeletor" class="villain-pic"><p>Skeletor</p></div>
+      <div class="villain-card"><img src="Images\Dr. Eggman.png" alt="Dr. Eggman" class="villain-pic"><p>Dr. Eggman</p></div>
+      <div class="villain-card"><img src="Images\M. Bison.jpg" alt="M. Bison" class="villain-pic"><p>M. Bison</p></div>
+      <div class="villain-card"><img src="Images\Turbo.jpg" alt="Turbo" class="villain-pic"><p>Turbo</p></div>
+      <div class="villain-card"><img src="Images\Dawn Bellwerth.png" alt="Dawn Bellwerth" class="villain-pic"><p>Dawn Bellwerth</p></div>
+      <div class="villain-card"><img src="Images\Conquest.jpg" alt="Conquest" class="villain-pic"><p>Conquest</p></div>
   </div>
-  
-  <div class="villain-name" id="villain-name">Loading...</div>
-
-  <div class="controls" id="controls">
-    </div>
 </div>
 
 <div id="feedback-overlay">
@@ -373,42 +456,58 @@
 </div>
 
 <script>
+// --- Gallery Toggle Logic ---
+function toggleGallery() {
+  const gameMode = document.getElementById('game-mode');
+  const galleryMode = document.getElementById('gallery-mode');
+  
+  if (galleryMode.style.display === 'none' || galleryMode.style.display === '') {
+    gameMode.style.display = 'none';
+    galleryMode.style.display = 'block';
+  } else {
+    gameMode.style.display = 'block';
+    galleryMode.style.display = 'none';
+  }
+}
+
 // --- Database from JSON Mapping ---
  const VILLAIN_DATA = [
-  { "villain": "Frieza", "anime": "Dragon Ball Z", "image": "png\Akaza.png" },
-  { "villain": "Madara Uchiha", "anime": "Naruto", "image": "Images/Madara Uchiha.jpg" },
-  { "villain": "Sosuke Aizen", "anime": "Bleach", "image": "png\Sosuke Aizen.png" },
-  { "villain": "Dio Brando", "anime": "JoJo's Bizarre Adventure", "image": "png\Dio Brando.png" },
-  { "villain": "Shigaraki", "anime": "My Hero Academia", "image": "png\Shigaraki.png" },
-  { "villain": "Muzan Kibutsuji", "anime": "Demon Slayer", "image": "png\Muzan Kibutsuji.png" },
-  { "villain": "Meruem", "anime": "Hunter x Hunter", "image": "png\Meruem.png" },
-  { "villain": "Light Yagami", "anime": "Death Note", "image": "png\Light Yagami.png" },
-  { "villain": "Father", "anime": "Fullmetal Alchemist Brotherhood", "image": "png\Father.png" },
-  { "villain": "All For One", "anime": "My Hero Academia", "image": "png\All For One.png" },
-  { "villain": "Orochimaru", "anime": "Naruto", "image": "png\Orochimaru.png" },
-  { "villain": "Blackbeard", "anime": "One Piece", "image": "png\Blackbeard.png" },
-  { "villain": "Akaza", "anime": "Demon Slayer", "image": "png\Akaza.png" },
-  { "villain": "Ryomen Sukuna", "anime": "Jujutsu Kaisen", "image": "png\Ryomen Sukuna.png" },
-  { "villain": "Kenjaku", "anime": "Jujutsu Kaisen", "image": "png\Kenjaku.png" },
-  { "villain": "Hisoka", "anime": "Hunter x Hunter", "image": "png\Hisoka.png" },
-  { "villain": "Donquixote Doflamingo", "anime": "One Piece", "image": "png\Donquixote Doflamingo.png" },
-  { "villain": "Cell", "anime": "Dragon Ball Z", "image": "png\Cell.png" },
-  { "villain": "Pain", "anime": "Naruto", "image": "png\Pain.png" },
-  { "villain": "Kaguya Otsutsuki", "anime": "Naruto", "image": "png\Kaguya Otsutsuki.png" },
-  { "villain": "Envy", "anime": "Fullmetal Alchemist Brotherhood", "image": "png\Envy.png" },
-  { "villain": "Zamasu", "anime": "Dragon Ball Super", "image": "png\Zamasu.png" },
-  { "villain": "Dazai Osamu", "anime": "Bungou Stray Dogs", "image": "png\Dazai Osamu.png" },
-  { "villain": "Shogo Makishima", "anime": "Psycho-Pass", "image": "png\Shogo Makishima.png" }, 
-  { "villain": "Esdeath", "anime": "Akame ga Kill!", "image": "png\Esdeath.png" },
-  { "villain": "Kira Yoshikage", "anime": "JoJo's Bizarre Adventure", "image": "png\Kira Yoshikage.png" },
-  { "villain": "Shou Tucker", "anime": "Fullmetal Alchemist Brotherhood", "image": "png\Shou Tucker.png" },
-  { "villain": "Skeletor", "anime": "Masters of the Universe", "image": "png\Skeletor.png" },
-  { "villain": "Vicious", "anime": "Cowboy Bebop", "image": "png\Vicious.png" },
-  { "villain": "Dr. Eggman", "anime": "Sonic the Hedgehog", "image": "png\Dr. Eggman.png" },
-  { "villain": "M. Bison", "anime": "Street Fighter", "image": "png\M. Bison.png" },
-  { "villain": "Turbo", "anime": "Wreck-It Ralph", "image": "png\Turbo.png" },
-  { "villain": "Dawn Bellwerth", "anime": "Zootopia", "image": "png\Dawn Bellwerth.png" },
-  { "villain": "Conquest", "anime": "Invincible", "image": "png\Conquest.png" }
+  { "villain": "Frieza", "anime": "Dragon Ball Z", "image": "<img src=\"Images/Frieza.webp\" alt=\"Frieza\">" },
+  { "villain": "Madara Uchiha", "anime": "Naruto", "image": "<img src=\"Images/Madara Uchiha.jpg\" alt=\"Madara Uchiha\">" },
+  { "villain": "Sosuke Aizen", "anime": "Bleach", "image": "<img src=\"Images/Sosuke Aizen.webp\" alt=\"Sosuke Aizen\">" },
+  { "villain": "Dio Brando", "anime": "JoJo's Bizarre Adventure", "image": "<img src=\"Images/Dio Brando.jpg\" alt=\"Dio Brando\">" },
+  { "villain": "Shigaraki", "anime": "My Hero Academia", "image": "<img src=\"Images/Shigaraki.webp\" alt=\"Shigaraki\">" },
+  { "villain": "Muzan Kibutsuji", "anime": "Demon Slayer", "image": "<img src=\"Images/Muzan Kibutsuji.jpg\" alt=\"Muzan Kibutsuji\">" },
+  { "villain": "Meruem", "anime": "Hunter x Hunter", "image": "<img src=\"Images/Meruem.png\" alt=\"Meruem\">" },
+  { "villain": "Light Yagami", "anime": "Death Note", "image": "<img src=\"Images/Light Yagami.jpg\" alt=\"Light Yagami\">" },
+  { "villain": "Father", "anime": "Fullmetal Alchemist Brotherhood", "image": "<img src=\"Images/Father.jpg\" alt=\"Father\">" },
+  { "villain": "All For One", "anime": "My Hero Academia", "image": "<img src=\"Images/All For One.png\" alt=\"All For One\">" },
+  { "villain": "Orochimaru", "anime": "Naruto", "image": "<img src=\"Images/Orochimaru.jpg\" alt=\"Orochimaru\">" },
+  { "villain": "Blackbeard", "anime": "One Piece", "image": "<img src=\"Images/Blackbeard.webp\" alt=\"Blackbeard\">" },
+  { "villain": "Akaza", "anime": "Demon Slayer", "image": "<img src=\"Images/Akaza.png\" alt=\"Akaza\">" },
+  { "villain": "Ryomen Sukuna", "anime": "Jujutsu Kaisen", "image": "<img src=\"Images/Ryomen Sukuna.png\" alt=\"Ryomen Sukuna\">" },
+  { "villain": "Kenjaku", "anime": "Jujutsu Kaisen", "image": "<img src=\"Images/Kenjaku.png\" alt=\"Kenjaku\">" },
+  { "villain": "Hisoka", "anime": "Hunter x Hunter", "image": "<img src=\"Images/Hisoka.png\" alt=\"Hisoka\">" },
+  { "villain": "Donquixote Doflamingo", "anime": "One Piece", "image": "<img src=\"Images/Donquixote Doflamingo.jpg\" alt=\"Donquixote Doflamingo\">" },
+  { "villain": "Cell", "anime": "Dragon Ball Z", "image": "<img src=\"Images/Cell.jpg\" alt=\"Cell\">" },
+  { "villain": "Pain", "anime": "Naruto", "image": "<img src=\"Images/Pain.jpg\" alt=\"Pain\">" },
+  { "villain": "Kaguya Otsutsuki", "anime": "Naruto", "image": "<img src=\"Images/Kaguya Otsutsuki.png\" alt=\"Kaguya Otsutsuki\">" },
+  { "villain": "Envy", "anime": "Fullmetal Alchemist Brotherhood", "image": "<img src=\"Images/Envy.jpg\" alt=\"Envy\">" },
+  { "villain": "Zamasu", "anime": "Dragon Ball Super", "image": "<img src=\"Images/Zamasu.jpg\" alt=\"Zamasu\">" },
+  { "villain": "Dazai Osamu", "anime": "Bungou Stray Dogs", "image": "<img src=\"Images/Dazai Osamu.jpg\" alt=\"Dazai Osamu\">" },
+  { "villain": "Shogo Makishima", "anime": "Psycho-Pass", "image": "<img src=\"Images/Shogo Makishima.png\" alt=\"Shogo Makishima\">" },
+  { "villain": "Gendo Ikari", "anime": "Neon Genesis Evangelion", "image": "<img src=\"Images/Gendo Ikari.jpg\" alt=\"Gendo Ikari\">" },
+  { "villain": "Satsuki Kiryuin", "anime": "Kill la Kill", "image": "<img src=\"Images/Satsuki Kiryuin.jpg\" alt=\"Satsuki Kiryuin\">" },
+  { "villain": "Esdeath", "anime": "Akame ga Kill!", "image": "<img src=\"Images/Esdeath.jpeg\" alt=\"Esdeath\">" },
+  { "villain": "Kira Yoshikage", "anime": "JoJo's Bizarre Adventure", "image": "<img src=\"Images/Kira Yoshikage.png\" alt=\"Kira Yoshikage\">" },
+  { "villain": "Shou Tucker", "anime": "Fullmetal Alchemist Brotherhood", "image": "<img src=\"Images/Shou Tucker.png\" alt=\"Shou Tucker\">" },
+  { "villain": "Skeletor", "anime": "Masters of the Universe", "image": "<img src=\"Images/Skeletor.jpg\" alt=\"Skeletor\">" },
+  { "villain": "Vicious", "anime": "Cowboy Bebop", "image": "<img src=\"Images/Vicious.png\" alt=\"Vicious\">" },
+  { "villain": "Dr. Eggman", "anime": "Sonic the Hedgehog", "image": "<img src=\"Images/Dr. Eggman.jpg\" alt=\"Dr. Eggman\">" },
+  { "villain": "M. Bison", "anime": "Street Fighter", "image": "<img src=\"Images/M. Bison.jpg\" alt=\"M. Bison\">" },
+  { "villain": "Turbo", "anime": "Wreck-It Ralph", "image": "<img src=\"Images/Turbo.jpg\" alt=\"Turbo\">" },
+  { "villain": "Dawn Bellwerth", "anime": "Zootopia", "image": "<img src=\"Images/Dawn Bellwerth.png\" alt=\"Dawn Bellwerth\">" },
+  { "villain": "Conquest", "anime": "Invincible", "image": "<img src=\"Images/Conquest.jpg\" alt=\"Conquest\">" }
 ];
 
 // Extract unique animes for wrong answers
