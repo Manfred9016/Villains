@@ -163,19 +163,19 @@
     transition: all 0.3s ease;
   }
 
-  /* Villain Image Frame - UPDATED TO OPTION 2 STYLING (Portrait) */
+  /* Villain Image Frame */
   .image-frame {
     background-color: #000;
     border: 4px solid #444;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 5px;
     margin-bottom: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.8);
     position: relative;
-    max-width: 400px; /* Thinner width for portrait */
+    max-width: 500px;
     width: 100%;
-    height: 480px; /* Fixed height for consistent portrait aspect ratio */
     transition: border-color 0.3s;
+    aspect-ratio: 16/9;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,10 +188,10 @@
   .image-frame img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Prevents stretching or squishing */
-    object-position: top; /* Keeps faces in frame if cropped */
+    object-fit: cover;
+    object-position: top;
     display: block;
-    border-radius: 8px;
+    border-radius: 4px;
   }
 
   .villain-name {
@@ -207,7 +207,7 @@
   /* Action Buttons Grid */
   .controls {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* Changed to 3 columns for 6 buttons */
     gap: 15px;
     max-width: 900px;
     width: 100%;
@@ -323,7 +323,6 @@
     .team-card { width: 100%; max-width: 300px; }
     .header-banner h1 { font-size: 1.8rem; }
     .villain-name { font-size: 1.8rem; }
-    .image-frame { max-width: 320px; height: 384px; } /* Scale down portrait on mobile */
   }
   @media (max-width: 480px) {
     .controls { grid-template-columns: 1fr; }
@@ -359,7 +358,7 @@
   </div>
 
   <div class="image-frame" id="image-border">
-    <img id="villain-img" src="" alt="Villain Image" onerror="this.src='https://placehold.co/400x480/161625/ffffff?text=Image+Missing'">
+    <img id="villain-img" src="" alt="Villain Image" onerror="this.src='https://placehold.co/600x400/161625/ffffff?text=Image+Missing'">
   </div>
   
   <div class="villain-name" id="villain-name">Loading...</div>
@@ -376,42 +375,40 @@
 <script>
 // --- Database from JSON Mapping ---
  const VILLAIN_DATA = [
-  { "villain": "Frieza", "anime": "Dragon Ball Z", "image": "Images/Frieza.webp" },
+  { "villain": "Frieza", "anime": "Dragon Ball Z", "image": "png\Akaza.png" },
   { "villain": "Madara Uchiha", "anime": "Naruto", "image": "Images/Madara Uchiha.jpg" },
-  { "villain": "Sosuke Aizen", "anime": "Bleach", "image": "Images/Sosuke Aizen.webp" },
-  { "villain": "Dio Brando", "anime": "JoJo's Bizarre Adventure", "image": "Images/Dio Brando.jpg" },
-  { "villain": "Shigaraki", "anime": "My Hero Academia", "image": "Images/Shigaraki.webp" },
-  { "villain": "Muzan Kibutsuji", "anime": "Demon Slayer", "image": "Images/Muzan Kibutsuji.jpg" },
-  { "villain": "Meruem", "anime": "Hunter x Hunter", "image": "Images/Meruem.png" },
-  { "villain": "Light Yagami", "anime": "Death Note", "image": "Images/Light Yagami.jpg" },
-  { "villain": "Father", "anime": "Fullmetal Alchemist Brotherhood", "image": "Images/Father.jpg" },
-  { "villain": "All For One", "anime": "My Hero Academia", "image": "Images/All For One.png" },
-  { "villain": "Orochimaru", "anime": "Naruto", "image": "Images/Orochimaru.jpg" },
-  { "villain": "Blackbeard", "anime": "One Piece", "image": "Images/Blackbeard.webp" },
-  { "villain": "Akaza", "anime": "Demon Slayer", "image": "Images/Akaza.png" },
-  { "villain": "Ryomen Sukuna", "anime": "Jujutsu Kaisen", "image": "Images/Ryomen Sukuna.png" },
-  { "villain": "Kenjaku", "anime": "Jujutsu Kaisen", "image": "Images/Kenjaku.png" },
-  { "villain": "Hisoka", "anime": "Hunter x Hunter", "image": "Images/Hisoka.png" },
-  { "villain": "Donquixote Doflamingo", "anime": "One Piece", "image": "Images/Donquixote Doflamingo.jpg" },
-  { "villain": "Cell", "anime": "Dragon Ball Z", "image": "Images/Cell.jpg" },
-  { "villain": "Pain", "anime": "Naruto", "image": "Images/Pain.jpg" },
-  { "villain": "Kaguya Otsutsuki", "anime": "Naruto", "image": "Images/Kaguya Otsutsuki.png" },
-  { "villain": "Envy", "anime": "Fullmetal Alchemist Brotherhood", "image": "Images/Envy.jpg" },
-  { "villain": "Zamasu", "anime": "Dragon Ball Super", "image": "Images/Zamasu.jpg" },
-  { "villain": "Dazai Osamu", "anime": "Bungou Stray Dogs", "image": "Images/Dazai Osamu.jpg" },
-  { "villain": "Shogo Makishima", "anime": "Psycho-Pass", "image": "Images/Shogo Makishima.png" },
-  { "villain": "Gendo Ikari", "anime": "Neon Genesis Evangelion", "image": "Images/Gendo Ikari.jpg" },
-  { "villain": "Satsuki Kiryuin", "anime": "Kill la Kill", "image": "Images/Satsuki Kiryuin.jpg" },
-  { "villain": "Esdeath", "anime": "Akame ga Kill!", "image": "Images/Esdeath.jpeg" },
-  { "villain": "Kira Yoshikage", "anime": "JoJo's Bizarre Adventure", "image": "Images/Kira Yoshikage.png" },
-  { "villain": "Shou Tucker", "anime": "Fullmetal Alchemist Brotherhood", "image": "Images/Shou Tucker.png" },
-  { "villain": "Skeletor", "anime": "Masters of the Universe", "image": "Images/Skeletor.jpg" },
-  { "villain": "Vicious", "anime": "Cowboy Bebop", "image": "Images/Vicious.png" },
-  { "villain": "Dr. Eggman", "anime": "Sonic the Hedgehog", "image": "Images/Dr. Eggman.jpg" },
-  { "villain": "M. Bison", "anime": "Street Fighter", "image": "Images/M. Bison.jpg" },
-  { "villain": "Turbo", "anime": "Wreck-It Ralph", "image": "Images/Turbo.jpg" },
-  { "villain": "Dawn Bellwerth", "anime": "Zootopia", "image": "Images/Dawn Bellwerth.png" },
-  { "villain": "Conquest", "anime": "Invincible", "image": "Images/Conquest.jpg" }
+  { "villain": "Sosuke Aizen", "anime": "Bleach", "image": "png\Sosuke Aizen.png" },
+  { "villain": "Dio Brando", "anime": "JoJo's Bizarre Adventure", "image": "png\Dio Brando.png" },
+  { "villain": "Shigaraki", "anime": "My Hero Academia", "image": "png\Shigaraki.png" },
+  { "villain": "Muzan Kibutsuji", "anime": "Demon Slayer", "image": "png\Muzan Kibutsuji.png" },
+  { "villain": "Meruem", "anime": "Hunter x Hunter", "image": "png\Meruem.png" },
+  { "villain": "Light Yagami", "anime": "Death Note", "image": "png\Light Yagami.png" },
+  { "villain": "Father", "anime": "Fullmetal Alchemist Brotherhood", "image": "png\Father.png" },
+  { "villain": "All For One", "anime": "My Hero Academia", "image": "png\All For One.png" },
+  { "villain": "Orochimaru", "anime": "Naruto", "image": "png\Orochimaru.png" },
+  { "villain": "Blackbeard", "anime": "One Piece", "image": "png\Blackbeard.png" },
+  { "villain": "Akaza", "anime": "Demon Slayer", "image": "png\Akaza.png" },
+  { "villain": "Ryomen Sukuna", "anime": "Jujutsu Kaisen", "image": "png\Ryomen Sukuna.png" },
+  { "villain": "Kenjaku", "anime": "Jujutsu Kaisen", "image": "png\Kenjaku.png" },
+  { "villain": "Hisoka", "anime": "Hunter x Hunter", "image": "png\Hisoka.png" },
+  { "villain": "Donquixote Doflamingo", "anime": "One Piece", "image": "png\Donquixote Doflamingo.png" },
+  { "villain": "Cell", "anime": "Dragon Ball Z", "image": "png\Cell.png" },
+  { "villain": "Pain", "anime": "Naruto", "image": "png\Pain.png" },
+  { "villain": "Kaguya Otsutsuki", "anime": "Naruto", "image": "png\Kaguya Otsutsuki.png" },
+  { "villain": "Envy", "anime": "Fullmetal Alchemist Brotherhood", "image": "png\Envy.png" },
+  { "villain": "Zamasu", "anime": "Dragon Ball Super", "image": "png\Zamasu.png" },
+  { "villain": "Dazai Osamu", "anime": "Bungou Stray Dogs", "image": "png\Dazai Osamu.png" },
+  { "villain": "Shogo Makishima", "anime": "Psycho-Pass", "image": "png\Shogo Makishima.png" }, 
+  { "villain": "Esdeath", "anime": "Akame ga Kill!", "image": "png\Esdeath.png" },
+  { "villain": "Kira Yoshikage", "anime": "JoJo's Bizarre Adventure", "image": "png\Kira Yoshikage.png" },
+  { "villain": "Shou Tucker", "anime": "Fullmetal Alchemist Brotherhood", "image": "png\Shou Tucker.png" },
+  { "villain": "Skeletor", "anime": "Masters of the Universe", "image": "png\Skeletor.png" },
+  { "villain": "Vicious", "anime": "Cowboy Bebop", "image": "png\Vicious.png" },
+  { "villain": "Dr. Eggman", "anime": "Sonic the Hedgehog", "image": "png\Dr. Eggman.png" },
+  { "villain": "M. Bison", "anime": "Street Fighter", "image": "png\M. Bison.png" },
+  { "villain": "Turbo", "anime": "Wreck-It Ralph", "image": "png\Turbo.png" },
+  { "villain": "Dawn Bellwerth", "anime": "Zootopia", "image": "png\Dawn Bellwerth.png" },
+  { "villain": "Conquest", "anime": "Invincible", "image": "png\Conquest.png" }
 ];
 
 // Extract unique animes for wrong answers
