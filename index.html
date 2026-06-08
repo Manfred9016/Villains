@@ -38,7 +38,6 @@
       radial-gradient(circle at 85% 30%, rgba(255, 0, 234, 0.05), transparent 25%);
   }
 
-  /* Particles Background */
   #particles {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -46,7 +45,6 @@
     z-index: 0;
   }
 
-  /* Header */
   .header-banner {
     background-color: rgba(11, 11, 18, 0.9);
     border-bottom: 2px solid var(--neon-pink);
@@ -67,7 +65,6 @@
     text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-pink);
   }
 
-  /* Scoreboard Layout */
   .scoreboard-container {
     display: flex;
     justify-content: center;
@@ -104,7 +101,6 @@
     font-family: 'Orbitron', sans-serif;
   }
 
-  /* Progress Bar */
   .progress-bg {
     background: #222;
     height: 10px;
@@ -119,7 +115,6 @@
     transition: width 0.5s ease-out;
   }
 
-  /* Active Turn Highlighting */
   .team-card.active-turn {
     opacity: 1;
     transform: scale(1.08) translateY(-5px);
@@ -138,7 +133,6 @@
   #team-boys .progress-fill { background: var(--boys-color); box-shadow: 0 0 10px var(--boys-color); }
   #team-girls .progress-fill { background: var(--girls-color); box-shadow: 0 0 10px var(--girls-color); }
 
-  /* Main Game Area */
   .game-container {
     flex-grow: 1;
     display: flex;
@@ -163,7 +157,6 @@
     transition: all 0.3s ease;
   }
 
-  /* Villain Image Frame */
   .image-frame {
     background-color: #000;
     border: 4px solid #444;
@@ -204,7 +197,6 @@
     text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
   }
 
-  /* Action Buttons Grid */
   .controls {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -260,7 +252,6 @@
   .btn-correct { background-color: rgba(57, 255, 20, 0.2) !important; border-color: var(--neon-green) !important; box-shadow: 0 0 15px var(--neon-green) !important; color: var(--neon-green) !important; }
   .btn-wrong { background-color: rgba(255, 7, 58, 0.2) !important; border-color: var(--neon-red) !important; box-shadow: 0 0 15px var(--neon-red) !important; color: var(--neon-red) !important; }
 
-  /* Feedback Overlay */
   #feedback-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -293,7 +284,6 @@
   .text-correct { color: var(--neon-green); text-shadow: 0 0 20px var(--neon-green); }
   .text-wrong { color: var(--neon-red); text-shadow: 0 0 20px var(--neon-red); }
 
-  /* Animations */
   @keyframes flashCorrect { 0%, 100% { background-color: var(--bg-dark); } 50% { background-color: rgba(57, 255, 20, 0.2); } }
   @keyframes flashWrong { 0%, 100% { background-color: var(--bg-dark); } 50% { background-color: rgba(255, 7, 58, 0.2); } }
   .flash-correct { animation: flashCorrect 0.6s ease; }
@@ -307,7 +297,6 @@
     to { opacity: 1; }
   }
 
-  /* Confetti Canvas */
   #confetti-canvas {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -315,9 +304,7 @@
     z-index: 999;
   }
 
-  /* =========================================
-     GALLERY TESTER STYLES 
-     ========================================= */
+  /* GALLERY TESTER STYLES */
   #gallery-mode {
     display: none;
     padding: 20px;
@@ -341,6 +328,7 @@
       width: 250px;
       height: 300px;
       object-fit: cover;
+      object-position: top;
       border-radius: 8px;
       border: 2px solid var(--neon-pink);
   }
@@ -350,7 +338,6 @@
       font-family: 'Orbitron', sans-serif;
   }
 
-  /* Responsive */
   @media (max-width: 900px) {
     .controls { grid-template-columns: repeat(2, 1fr); }
   }
@@ -413,41 +400,7 @@
   <h1 style="text-align: center; font-family: 'Orbitron', sans-serif; color: var(--neon-blue);">Image Path Tester</h1>
   <p style="text-align: center; margin-bottom: 30px;">If an image is broken here, double-check its exact spelling and file extension (.jpg, .png, .webp) in your GitHub 'Images' folder.</p>
 
-  <div class="gallery">
-      <div class="villain-card"><img src="Images\Frieza.png" alt="Frieza" class="villain-pic"><p>Frieza</p></div>
-      <div class="villain-card"><img src="Images/Madara Uchiha.jpg" alt="Madara Uchiha" class="villain-pic"><p>Madara Uchiha</p></div>
-      <div class="villain-card"><img src="Images\Sosuke Aizen.png" alt="Sosuke Aizen" class="villain-pic"><p>Sosuke Aizen</p></div>
-      <div class="villain-card"><img src="Images\Dio Brando.png" alt="Dio Brando" class="villain-pic"><p>Dio Brando</p></div>
-      <div class="villain-card"><img src="Images\Shigaraki.png" alt="Shigaraki" class="villain-pic"><p>Shigaraki</p></div>
-      <div class="villain-card"><img src="Images\Muzan Kibutsuji.png" alt="Muzan Kibutsuji" class="villain-pic"><p>Muzan Kibutsuji</p></div>
-      <div class="villain-card"><img src="Images\Meruem.png" alt="Meruem" class="villain-pic"><p>Meruem</p></div>
-      <div class="villain-card"><img src="Images\Light_Yagami.png" alt="Light Yagami" class="villain-pic"><p>Light Yagami</p></div>
-      <div class="villain-card"><img src="Images\Father.png" alt="Father" class="villain-pic"><p>Father</p></div>
-      <div class="villain-card"><img src="Images\All For One.png" alt="All For One" class="villain-pic"><p>All For One</p></div>
-      <div class="villain-card"><img src="Images\Orochimaru.png" alt="Orochimaru" class="villain-pic"><p>Orochimaru</p></div>
-      <div class="villain-card"><img src="Images\Blackbeard.png" alt="Blackbeard" class="villain-pic"><p>Blackbeard</p></div>
-      <div class="villain-card"><img src="Images\Akaza.png" alt="Akaza" class="villain-pic"><p>Akaza</p></div>
-      <div class="villain-card"><img src="Images\Sukuna_Cursed_Clash.png" alt="Ryomen Sukuna" class="villain-pic"><p>Ryomen Sukuna</p></div>
-      <div class="villain-card"><img src="Images\Kenjaku.png" alt="Kenjaku" class="villain-pic"><p>Kenjaku</p></div>
-      <div class="villain-card"><img src="Images\Hisoka.png" alt="Hisoka" class="villain-pic"><p>Hisoka</p></div>
-      <div class="villain-card"><img src="Images\DoflamingoRender.png" alt="Donquixote Doflamingo" class="villain-pic"><p>Donquixote Doflamingo</p></div>
-      <div class="villain-card"><img src="Images\Cell.png" alt="Cell" class="villain-pic"><p>Cell</p></div>
-      <div class="villain-card"><img src="Images\Pain.png" alt="Pain" class="villain-pic"><p>Pain</p></div>
-      <div class="villain-card"><img src="Images\Kaguya Otsutsuki.png" alt="Kaguya Otsutsuki" class="villain-pic"><p>Kaguya Otsutsuki</p></div>
-      <div class="villain-card"><img src="Images\Zamasu.pngsu.jpg" alt="Zamasu" class="villain-pic"><p>Zamasu</p></div>
-      <div class="villain-card"><img src="Images\Dazai Osamu.png" alt="Dazai Osamu" class="villain-pic"><p>Dazai Osamu</p></div>
-      <div class="villain-card"><img src="Images\Gendo Ikari.png" alt="Gendo Ikari" class="villain-pic"><p>Gendo Ikari</p></div>
-      <div class="villain-card"><img src="Images\Satsuki Kiryuin.png" alt="Satsuki Kiryuin" class="villain-pic"><p>Satsuki Kiryuin</p></div>
-      <div class="villain-card"><img src="Images\Esdeath.png" alt="Esdeath" class="villain-pic"><p>Esdeath</p></div>
-      <div class="villain-card"><img src="Images\Kira Yoshikage.png" alt="Kira Yoshikage" class="villain-pic"><p>Kira Yoshikage</p></div>
-      <div class="villain-card"><img src="Images\Skeletor.png" alt="Skeletor" class="villain-pic"><p>Skeletor</p></div>
-      <div class="villain-card"><img src="Images\Skeletor.jpg" alt="Skeletor" class="villain-pic"><p>Skeletor</p></div>
-      <div class="villain-card"><img src="Images\Dr. Eggman.png" alt="Dr. Eggman" class="villain-pic"><p>Dr. Eggman</p></div>
-      <div class="villain-card"><img src="Images\M. Bison.jpg" alt="M. Bison" class="villain-pic"><p>M. Bison</p></div>
-      <div class="villain-card"><img src="Images\Turbo.jpg" alt="Turbo" class="villain-pic"><p>Turbo</p></div>
-      <div class="villain-card"><img src="Images\Dawn Bellwerth.png" alt="Dawn Bellwerth" class="villain-pic"><p>Dawn Bellwerth</p></div>
-      <div class="villain-card"><img src="Images\Conquest.jpg" alt="Conquest" class="villain-pic"><p>Conquest</p></div>
-  </div>
+  <div class="gallery" id="gallery-container"></div>
 </div>
 
 <div id="feedback-overlay">
@@ -470,47 +423,59 @@ function toggleGallery() {
   }
 }
 
-// --- Database from JSON Mapping ---
- const VILLAIN_DATA = [
-  { "villain": "Frieza", "anime": "Dragon Ball Z", "image": "<img src=\"Images/Frieza.webp\" alt=\"Frieza\">" },
-  { "villain": "Madara Uchiha", "anime": "Naruto", "image": "<img src=\"Images/Madara Uchiha.jpg\" alt=\"Madara Uchiha\">" },
-  { "villain": "Sosuke Aizen", "anime": "Bleach", "image": "<img src=\"Images/Sosuke Aizen.webp\" alt=\"Sosuke Aizen\">" },
-  { "villain": "Dio Brando", "anime": "JoJo's Bizarre Adventure", "image": "<img src=\"Images/Dio Brando.jpg\" alt=\"Dio Brando\">" },
-  { "villain": "Shigaraki", "anime": "My Hero Academia", "image": "<img src=\"Images/Shigaraki.webp\" alt=\"Shigaraki\">" },
-  { "villain": "Muzan Kibutsuji", "anime": "Demon Slayer", "image": "<img src=\"Images/Muzan Kibutsuji.jpg\" alt=\"Muzan Kibutsuji\">" },
-  { "villain": "Meruem", "anime": "Hunter x Hunter", "image": "<img src=\"Images/Meruem.png\" alt=\"Meruem\">" },
-  { "villain": "Light Yagami", "anime": "Death Note", "image": "<img src=\"Images/Light Yagami.jpg\" alt=\"Light Yagami\">" },
-  { "villain": "Father", "anime": "Fullmetal Alchemist Brotherhood", "image": "<img src=\"Images/Father.jpg\" alt=\"Father\">" },
-  { "villain": "All For One", "anime": "My Hero Academia", "image": "<img src=\"Images/All For One.png\" alt=\"All For One\">" },
-  { "villain": "Orochimaru", "anime": "Naruto", "image": "<img src=\"Images/Orochimaru.jpg\" alt=\"Orochimaru\">" },
-  { "villain": "Blackbeard", "anime": "One Piece", "image": "<img src=\"Images/Blackbeard.webp\" alt=\"Blackbeard\">" },
-  { "villain": "Akaza", "anime": "Demon Slayer", "image": "<img src=\"Images/Akaza.png\" alt=\"Akaza\">" },
-  { "villain": "Ryomen Sukuna", "anime": "Jujutsu Kaisen", "image": "<img src=\"Images/Ryomen Sukuna.png\" alt=\"Ryomen Sukuna\">" },
-  { "villain": "Kenjaku", "anime": "Jujutsu Kaisen", "image": "<img src=\"Images/Kenjaku.png\" alt=\"Kenjaku\">" },
-  { "villain": "Hisoka", "anime": "Hunter x Hunter", "image": "<img src=\"Images/Hisoka.png\" alt=\"Hisoka\">" },
-  { "villain": "Donquixote Doflamingo", "anime": "One Piece", "image": "<img src=\"Images/Donquixote Doflamingo.jpg\" alt=\"Donquixote Doflamingo\">" },
-  { "villain": "Cell", "anime": "Dragon Ball Z", "image": "<img src=\"Images/Cell.jpg\" alt=\"Cell\">" },
-  { "villain": "Pain", "anime": "Naruto", "image": "<img src=\"Images/Pain.jpg\" alt=\"Pain\">" },
-  { "villain": "Kaguya Otsutsuki", "anime": "Naruto", "image": "<img src=\"Images/Kaguya Otsutsuki.png\" alt=\"Kaguya Otsutsuki\">" },
-  { "villain": "Envy", "anime": "Fullmetal Alchemist Brotherhood", "image": "<img src=\"Images/Envy.jpg\" alt=\"Envy\">" },
-  { "villain": "Zamasu", "anime": "Dragon Ball Super", "image": "<img src=\"Images/Zamasu.jpg\" alt=\"Zamasu\">" },
-  { "villain": "Dazai Osamu", "anime": "Bungou Stray Dogs", "image": "<img src=\"Images/Dazai Osamu.jpg\" alt=\"Dazai Osamu\">" },
-  { "villain": "Shogo Makishima", "anime": "Psycho-Pass", "image": "<img src=\"Images/Shogo Makishima.png\" alt=\"Shogo Makishima\">" },
-  { "villain": "Gendo Ikari", "anime": "Neon Genesis Evangelion", "image": "<img src=\"Images/Gendo Ikari.jpg\" alt=\"Gendo Ikari\">" },
-  { "villain": "Satsuki Kiryuin", "anime": "Kill la Kill", "image": "<img src=\"Images/Satsuki Kiryuin.jpg\" alt=\"Satsuki Kiryuin\">" },
-  { "villain": "Esdeath", "anime": "Akame ga Kill!", "image": "<img src=\"Images/Esdeath.jpeg\" alt=\"Esdeath\">" },
-  { "villain": "Kira Yoshikage", "anime": "JoJo's Bizarre Adventure", "image": "<img src=\"Images/Kira Yoshikage.png\" alt=\"Kira Yoshikage\">" },
-  { "villain": "Shou Tucker", "anime": "Fullmetal Alchemist Brotherhood", "image": "<img src=\"Images/Shou Tucker.png\" alt=\"Shou Tucker\">" },
-  { "villain": "Skeletor", "anime": "Masters of the Universe", "image": "<img src=\"Images/Skeletor.jpg\" alt=\"Skeletor\">" },
-  { "villain": "Vicious", "anime": "Cowboy Bebop", "image": "<img src=\"Images/Vicious.png\" alt=\"Vicious\">" },
-  { "villain": "Dr. Eggman", "anime": "Sonic the Hedgehog", "image": "<img src=\"Images/Dr. Eggman.jpg\" alt=\"Dr. Eggman\">" },
-  { "villain": "M. Bison", "anime": "Street Fighter", "image": "<img src=\"Images/M. Bison.jpg\" alt=\"M. Bison\">" },
-  { "villain": "Turbo", "anime": "Wreck-It Ralph", "image": "<img src=\"Images/Turbo.jpg\" alt=\"Turbo\">" },
-  { "villain": "Dawn Bellwerth", "anime": "Zootopia", "image": "<img src=\"Images/Dawn Bellwerth.png\" alt=\"Dawn Bellwerth\">" },
-  { "villain": "Conquest", "anime": "Invincible", "image": "<img src=\"Images/Conquest.jpg\" alt=\"Conquest\">" }
+// --- Corrected Database ---
+// Using forward slashes (/) and matching the exact .png/.jpg file names you put in your gallery block
+const VILLAIN_DATA = [
+  { "villain": "Frieza", "anime": "Dragon Ball Z", "image": "Images/Frieza.png" },
+  { "villain": "Madara Uchiha", "anime": "Naruto", "image": "Images/Madara Uchiha.jpg" },
+  { "villain": "Sosuke Aizen", "anime": "Bleach", "image": "Images/Sosuke Aizen.png" },
+  { "villain": "Dio Brando", "anime": "JoJo's Bizarre Adventure", "image": "Images/Dio Brando.png" },
+  { "villain": "Shigaraki", "anime": "My Hero Academia", "image": "Images/Shigaraki.png" },
+  { "villain": "Muzan Kibutsuji", "anime": "Demon Slayer", "image": "Images/Muzan Kibutsuji.png" },
+  { "villain": "Meruem", "anime": "Hunter x Hunter", "image": "Images/Meruem.png" },
+  { "villain": "Light Yagami", "anime": "Death Note", "image": "Images/Light_Yagami.png" },
+  { "villain": "Father", "anime": "Fullmetal Alchemist Brotherhood", "image": "Images/Father.png" },
+  { "villain": "All For One", "anime": "My Hero Academia", "image": "Images/All For One.png" },
+  { "villain": "Orochimaru", "anime": "Naruto", "image": "Images/Orochimaru.png" },
+  { "villain": "Blackbeard", "anime": "One Piece", "image": "Images/Blackbeard.png" },
+  { "villain": "Akaza", "anime": "Demon Slayer", "image": "Images/Akaza.png" },
+  { "villain": "Ryomen Sukuna", "anime": "Jujutsu Kaisen", "image": "Images/Sukuna_Cursed_Clash.png" },
+  { "villain": "Kenjaku", "anime": "Jujutsu Kaisen", "image": "Images/Kenjaku.png" },
+  { "villain": "Hisoka", "anime": "Hunter x Hunter", "image": "Images/Hisoka.png" },
+  { "villain": "Donquixote Doflamingo", "anime": "One Piece", "image": "Images/DoflamingoRender.png" },
+  { "villain": "Cell", "anime": "Dragon Ball Z", "image": "Images/Cell.png" },
+  { "villain": "Pain", "anime": "Naruto", "image": "Images/Pain.png" },
+  { "villain": "Kaguya Otsutsuki", "anime": "Naruto", "image": "Images/Kaguya Otsutsuki.png" },
+  { "villain": "Envy", "anime": "Fullmetal Alchemist Brotherhood", "image": "Images/Envy.jpg" },
+  { "villain": "Zamasu", "anime": "Dragon Ball Super", "image": "Images/Zamasu.jpg" },
+  { "villain": "Dazai Osamu", "anime": "Bungou Stray Dogs", "image": "Images/Dazai Osamu.png" },
+  { "villain": "Shogo Makishima", "anime": "Psycho-Pass", "image": "Images/Shogo Makishima.png" },
+  { "villain": "Gendo Ikari", "anime": "Neon Genesis Evangelion", "image": "Images/Gendo Ikari.png" },
+  { "villain": "Satsuki Kiryuin", "anime": "Kill la Kill", "image": "Images/Satsuki Kiryuin.png" },
+  { "villain": "Esdeath", "anime": "Akame ga Kill!", "image": "Images/Esdeath.png" },
+  { "villain": "Kira Yoshikage", "anime": "JoJo's Bizarre Adventure", "image": "Images/Kira Yoshikage.png" },
+  { "villain": "Shou Tucker", "anime": "Fullmetal Alchemist Brotherhood", "image": "Images/Shou Tucker.png" },
+  { "villain": "Skeletor", "anime": "Masters of the Universe", "image": "Images/Skeletor.jpg" },
+  { "villain": "Vicious", "anime": "Cowboy Bebop", "image": "Images/Vicious.png" },
+  { "villain": "Dr. Eggman", "anime": "Sonic the Hedgehog", "image": "Images/Dr. Eggman.png" },
+  { "villain": "M. Bison", "anime": "Street Fighter", "image": "Images/M. Bison.jpg" },
+  { "villain": "Turbo", "anime": "Wreck-It Ralph", "image": "Images/Turbo.jpg" },
+  { "villain": "Dawn Bellwerth", "anime": "Zootopia", "image": "Images/Dawn Bellwerth.png" },
+  { "villain": "Conquest", "anime": "Invincible", "image": "Images/Conquest.jpg" }
 ];
 
-// Extract unique animes for wrong answers
+// --- Auto-Generate Gallery on Load ---
+function populateGallery() {
+  const container = document.getElementById('gallery-container');
+  VILLAIN_DATA.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'villain-card';
+    card.innerHTML = `<img src="${v.image}" alt="${v.villain}" class="villain-pic"><p>${v.villain}</p>`;
+    container.appendChild(card);
+  });
+}
+populateGallery(); // Call it immediately to build the gallery
+
 const ALL_ANIMES = [...new Set(VILLAIN_DATA.map(v => v.anime))];
 
 // --- Game State ---
@@ -520,7 +485,6 @@ let currentVillainIndex = 0;
 let shuffledVillains = [];
 const WIN_SCORE = 100;
 
-// --- DOM Elements ---
 const elBoysCard = document.getElementById('team-boys');
 const elGirlsCard = document.getElementById('team-girls');
 const elTurnAnnouncer = document.getElementById('turn-announcer');
@@ -532,7 +496,6 @@ const feedbackOverlay = document.getElementById('feedback-overlay');
 const feedbackTitle = document.getElementById('feedback-title');
 const feedbackDesc = document.getElementById('feedback-desc');
 
-// --- Audio System ---
 function playSound(type){
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
   const osc = ctx.createOscillator();
@@ -542,7 +505,7 @@ function playSound(type){
   gainNode.connect(ctx.destination);
   
   if(type === "correct"){
-    osc.type = "square"; // More 8-bit/retro anime feel
+    osc.type = "square";
     osc.frequency.setValueAtTime(440, ctx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
     osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.2);
@@ -560,10 +523,10 @@ function playSound(type){
     osc.stop(ctx.currentTime + 0.4);
   } else if (type === "win") {
     osc.type = "sine";
-    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
-    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.2); // G5
-    osc.frequency.setValueAtTime(1046.50, ctx.currentTime + 0.3); // C6
+    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
+    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.2);
+    osc.frequency.setValueAtTime(1046.50, ctx.currentTime + 0.3);
     gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
     gainNode.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 1.5);
     osc.start();
@@ -571,18 +534,16 @@ function playSound(type){
   }
 }
 
-// --- Utilities ---
 function shuffle(array){
   return array.sort(()=>Math.random()-0.5);
 }
 
-function getRandomWrongAnimes(correctAnime, count = 5) { // Updated to generate 5 wrong options
+function getRandomWrongAnimes(correctAnime, count = 5) {
   let wrongAnimes = ALL_ANIMES.filter(a => a !== correctAnime);
   wrongAnimes = shuffle(wrongAnimes);
   return wrongAnimes.slice(0, count);
 }
 
-// --- Game Logic ---
 function initGame() {
   shuffledVillains = shuffle([...VILLAIN_DATA]);
   currentVillainIndex = 0;
@@ -598,10 +559,11 @@ function loadQuestion() {
   }
   
   const villain = shuffledVillains[currentVillainIndex];
+  
+  // Clean URL mapping applies smoothly here now!
   elVillainImg.src = villain.image;
   elVillainName.textContent = villain.villain;
   
-  // Generate Answers (1 correct + 5 wrong = 6 total options)
   const correctAnime = villain.anime;
   const wrongAnimes = getRandomWrongAnimes(correctAnime, 5); 
   let options = shuffle([correctAnime, ...wrongAnimes]);
@@ -649,7 +611,6 @@ function showFeedback(isCorrect, villainName, correctAnime) {
     feedbackDesc.innerHTML = `<span style="color:var(--neon-blue);font-weight:bold;">${villainName}</span> is actually from <span style="color:var(--neon-red);font-weight:bold;">${correctAnime}</span>.`;
   }
 
-  // Force reflow for animation restart
   feedbackTitle.style.animation = 'none';
   feedbackTitle.offsetHeight; 
   feedbackTitle.style.animation = null;
@@ -675,7 +636,6 @@ function makeGuess(guess, btnElement) {
     btnElement.classList.add('btn-correct');
     scores[currentTurn] += 10;
     
-    // Update Score & Progress
     document.getElementById(`score-${currentTurn}`).textContent = scores[currentTurn];
     const progressPercent = Math.min((scores[currentTurn] / WIN_SCORE) * 100, 100);
     document.getElementById(`progress-${currentTurn}`).style.width = `${progressPercent}%`;
@@ -692,7 +652,6 @@ function makeGuess(guess, btnElement) {
     document.body.classList.add('flash-wrong');
     btnElement.classList.add('btn-wrong');
     
-    // Find and highlight correct button
     buttons.forEach(btn => {
       if(btn.textContent === villain.anime) btn.classList.add('btn-correct');
     });
@@ -700,7 +659,6 @@ function makeGuess(guess, btnElement) {
     showFeedback(false, villain.villain, villain.anime);
   }
 
-  // Next Turn Logic
   setTimeout(() => {
     feedbackOverlay.style.display = 'none';
     currentTurn = (currentTurn === 'boys') ? 'girls' : 'boys';
@@ -729,7 +687,6 @@ function endGame(winningTeam) {
   `;
 }
 
-// --- Background Particles ---
 function initParticles() {
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d');
@@ -772,7 +729,6 @@ function initParticles() {
   animate();
 }
 
-// --- Confetti System ---
 function startConfetti() {
   const canvas = document.getElementById('confetti-canvas');
   const ctx = canvas.getContext('2d');
