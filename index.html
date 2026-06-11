@@ -690,7 +690,7 @@ function makeGuess(guess, btnElement) {
     playSound('correct');
     document.body.classList.add('flash-correct');
     btnElement.classList.add('btn-correct');
-    scores[currentTurn] += 10;
+    scores[currentTurn] += 7;
     
     // Update Score & Progress
     document.getElementById(`score-${currentTurn}`).textContent = scores[currentTurn];
